@@ -25,7 +25,7 @@ The model file should be human-readable, so that model parameters can be easily 
 
 The tagging program will be invoked in the following way: 
 ```
-> python hmmdecode3.py /path/to/input 
+> python hmmdecode3.py /path/to/input [/path/to/answer]
 ```
 The argument is a single file containing the test data; the program will read the parameters of a hidden Markov model from the file hmmmodel.txt, tag each word in the test data, and write the results to a text file called hmmoutput.txt in the same format as the training data. 
 

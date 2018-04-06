@@ -13,6 +13,8 @@ The program (nblearn3.py) will perform document split to the word level token as
 The argument is a single file containing the training data; the program will learn a naive Bayes model, 
 and write the model parameters to a file called nbmodel.txt.
 
+This implementation support multiple categories of classification. For example, your data can be classifier as [['True', 'Fake'], ['Positive', 'Negative']]
+
 ## Smoothing:
 The solution uses add-one smoothing on the training data, and simply ignores unknown tokens in the test data.
 
@@ -40,7 +42,7 @@ The model file is human-readable, so that model parameters can be easily underst
 
 The classifier program will be invoked in the following way: 
 ```
-> python nbclassify3.py /path/to/input 
+> python nbclassify3.py /path/to/input [/path/to/answer]
 ```
 The argument is a single file containing the test data; the program will read the parameters of a Naive Bayes model from the file nbmodel.txt, classify each review in the test data, and write the results to a text file called nboutput.txt in the same format as the training data. 
 
