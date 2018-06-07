@@ -29,42 +29,6 @@ It defines classes_and_methods
 @create:    April 18, 2018
 @updated:   April 20, 2018
 
-Algorithm: PerceptronTrain(D, MaxIter) 
-1: wd ← 0, for all d = 1 . . . D        # initialize weights
-2: b ← 0                                # initialize bias
-3: for iter = 1 . . . MaxIter do
-4:      for all (x,y) ∈ D do
-5:        a ← ∑d=1~D wd xd + b            # compute activation for this example
-6:        if ya ≤ 0 then
-7:            wd ← wd + yxd, for all d = 1 ... D    # update weights
-8:            b ← b + y                    # update bias
-9:         end if
-10:    end for
-11: end for 
-12: return w0, w1, ..., wD, b
-
-Algorithm: PerceptronTest(w0, w1, ..., wD, b, ˆx) 
-1: a ← ∑D d=1 wd xˆ_d + b             # compute activation for the test example
-2: return sign(a)
-
-
-Algorithm: AveragedPerceptronTrain(D, MaxIter) 
-1: w ← <0, 0, . . . 0>, b ← 0         # initialize weights and bias
-2: u ← <0, 0, . . . 0>, β ← 0         # initialize chased weights and bias
-3: c ← 1                              # initialize example counter to one
-4: for iter = 1 . . . MaxIter do
-5:    for all (x,y) ∈ D do
-6:        if y(w · x + b) ≤ 0 then
-7:            w ← w + y x              # update weights
-8:            b ← b + y                # update bias
-9:            u ← u + y c x            # update cached weights
-10:           β ← β + y c              # update cached bias
-11:        end if
-12:        c ← c + 1                   # increment counter regardless of update
-13:    end for
-14: end for 
-15: return w - 1/c u, b - 1/c β    # return averaged weights and bias
-
 Reference F1 score: 0.88 for vanilla perceptron and 0.89 for the averaged perceptron,
 '''
 from __future__ import print_function 
@@ -555,10 +519,11 @@ def main(input_doc, model, answer=None):
 if __name__ == '__main__':
     '''
     Main program.
-        1. Read the model file from MODEL_FILE_NAME = './nbmodel.txt' as default.
+        1. Read the model file from MODEL_FILE_NAME = './vanillamodel.txt or averagedmodel.txt' for different models.
         2. Construct Perceptron algorithm to vanilla model or averaged model for two classification tasks.
-        3. Predict each classification on each review.
-        4. Drop out unknown words.
+        3. Drop out unknown words.
+        4. Predict each classification on each review.
+
     '''      
     # Get input and output parameters
     argv_len = len(sys.argv)

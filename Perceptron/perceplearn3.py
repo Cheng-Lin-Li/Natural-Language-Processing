@@ -28,42 +28,6 @@ It defines classes_and_methods
 @create:    April 18, 2018
 @updated:   April 20, 2018
 
-Algorithm: PerceptronTrain(D, MaxIter) 
-1: wd ← 0, for all d = 1 . . . D        # initialize weights
-2: b ← 0                                # initialize bias
-3: for iter = 1 . . . MaxIter do
-4:      for all (x,y) ∈ D do
-5:        a ← ∑d=1~D wd xd + b            # compute activation for this example
-6:        if ya ≤ 0 then
-7:            wd ← wd + yxd, for all d = 1 ... D    # update weights
-8:            b ← b + y                    # update bias
-9:         end if
-10:    end for
-11: end for 
-12: return w0, w1, ..., wD, b
-
-Algorithm: PerceptronTest(w0, w1, ..., wD, b, ˆx) 
-1: a ← ∑D d=1 wd xˆ_d + b             # compute activation for the test example
-2: return sign(a)
-
-
-Algorithm: AveragedPerceptronTrain(D, MaxIter) 
-1: w ← <0, 0, . . . 0>, b ← 0         # initialize weights and bias
-2: u ← <0, 0, . . . 0>, β ← 0         # initialize chased weights and bias
-3: c ← 1                              # initialize example counter to one
-4: for iter = 1 . . . MaxIter do
-5:    for all (x,y) ∈ D do
-6:        if y(w · x + b) ≤ 0 then
-7:            w ← w + y x              # update weights
-8:            b ← b + y                # update bias
-9:            u ← u + y c x            # update cached weights
-10:           β ← β + y c              # update cached bias
-11:        end if
-12:        c ← c + 1                   # increment counter regardless of update
-13:    end for
-14: end for 
-15: return w - 1/c u, b - 1/c β    # return averaged weights and bias
-
 '''
 from __future__ import print_function 
 from __future__ import division
@@ -813,14 +777,27 @@ if __name__ == '__main__':
         1. Read the training file from train-labeled.txt as default.
         2. Using each vocabulary as features   
         3. Construct dictionary and word counting for each review.
-        4. Perform Percepton algorithm to calculate weights and b.
-            iterations = 30
-            early stop criteria: 
-
-        5. To prevent under flow, we will use log probability to calculus.
-             log P(H_j|E) ~ log(P(H_j)) + SUM_i(log P(E_i|H_j)) - SUM_i(log P(E_i))
-        6. Construct evidence probability table for each word. 
-        7. Store these probability tables in nboutput.txt for nbclassify3.py to read and perform classification tasks.
+            3-1. Find total vocabulary we have from those reviews and create document vector for each review. 
+                word_dict = {'word0': 0, 'word1': 1,....'wordn', n} where the 0 ... n is the index for word0 ... wordn.
+            3-2. Construct document matrix
+                document_matrix = [
+                    [0, 0, 1, 5, ...1, 0]    # First document / review with word distribution. There are 1 word2, 5 word3, ... 1 wordn-1 
+                    [1, 0, 0, 1, ...0, 0]    # Second document / review with word distribution. There are 1 word0, 1 word3, ... 
+                    [2, 10, 1, 2, ...3, 0]
+                    ...
+                    [0, 11, 0, 0, ...9, 1]
+                ] 
+        4. Perform two different Percepton algorithms (vanilla and averaged) to calculate weights and bias.
+            This program uses bagging approach to get better performance.
+            Three training approaches:
+                1. FOLDS = None for training data without shuffle.
+                2. FOLDS = 1 for random sample data without validation set.
+                3. FOLDS = 10 for K folds algorithm
+            Stop criteria:
+                1. ITERATION = 30
+                2. CONVERAGE = 0.0001
+                3. PATIENT = 5
+        5. Store the network weights and bias into vanillamodel.txt or averagedmodel.txt for percepclassify3.py to perform classification tasks.
     '''      
     
     # Get input and output parameters
