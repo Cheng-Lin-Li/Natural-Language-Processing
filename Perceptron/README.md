@@ -11,8 +11,7 @@ For each perceptron model will identify hotel reviews on two classifications tas
 
 The program (perceplearn3.py) will perform document split to the word level token as features to train for classification learning and generate probabilities tables into file. 
 
-The argument is a single file containing the training data; the program will learn a naive Bayes model, 
-and write the model parameters to a file called vanillamodel.txt and averagedmodel.txt.
+The argument is a single file containing the training data; the program will learn vanilla and averaged models, and write the model parameters to a file called vanillamodel.txt and averagedmodel.txt.
 
 This implementation support multiple categories of classification. For example, your data can be classifier as [['True', 'Fake'], ['Positive', 'Negative']]
 
@@ -37,13 +36,13 @@ There are two programs: perceplearn3.py will learn probabilities model from the 
 ```
 > python perceplearn3.py /path/to/input 
 ```
-The argument is a single file containing the training data; the program will learn probabilities models, and write the model parameters to a file called nbmodel.txt. The format of the model is JSON, and the model file should contain sufficient information for nbclassify3.py to successfully classify new data. 
+The argument is a single file containing the training data; the program will learn probabilities models, and write the model parameters to a file called vanillamodel.txt and averagedmodel.txt. The format of the model is JSON, and the model file should contain sufficient information for percepclassify3.py to successfully classify new data. 
 The model file is human-readable, so that model parameters can be easily understood by visual inspection of the file. 
 
 
 The classifier program will be invoked in the following way: 
 ```
-> python nbclassify3.py /path/to/input [/path/to/answer]
+> python percepclassify3.py /path/to/input [/path/to/answer]
 ```
 The argument is a single file containing the test data; the program will read the parameters of a vanilla or averaged perceptron model from the file vanillamodel.txt or averagedmodel.txt, classify each review in the test data, and write the results to a text file called percepoutput.txt in the same format as the training data. 
 
